@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IncognitoInteract</title>
+    <!-- Add your favicon link here -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    
+
+
+
+</head>
+
+<body>
+
+
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="IncognitoInteract" class="logo">
+  <div class="wrapper">
+      <div class="title-text">
+        <div class="title login">Encrypt</div>
+        <div class="title signup">Decrypt</div>
+
+      </div>
+      <div class="form-container">
+        <div class="slide-controls">
+          <input type="radio" name="slide" id="login" checked>
+          <input type="radio" name="slide" id="signup">
+          <label for="login" class="slide login">Encrypt</label>
+          <label for="signup" class="slide signup">Decrypt</label>
+          <div class="slider-tab"></div>
+        </div>
+        <div class="form-inner">
+          <form action="/encrypt" class="login" method="POST">
+
+            <div class="field">
+              <input type="text" name="input_text" placeholder="Message" required>
+            </div>
+            <div class="field">
+              <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Encrypt">
+            </div>
+            <div id="results"></div>
+                <h3 style="display:none;">Secret key</h3>
+                <div id="output-container">
+                  <span class="encrypt-result"></span>
+                </div>
+    
+          </form>
+          <form action="/decrypt" class="signup" method="POST">
+
+            <div class="field">
+              <input type="text" name="input_text" placeholder="Secret key" required>
+            </div>
+            <div class="field">
+              <input type="password" name="password" placeholder="Password" required>
+            </div>
+            
+            <div class="field btn">
+              <div class="btn-layer"></div>
+              <input type="submit" value="Decrypt">
+            </div>
+            <div class="login-link">Don't have Secret key? <a href="">Encrypt</a></div>
+
+            
+            <h3 style="display:none;">Message</h3>
+              <div id="output-container">
+                <span class="decrypt-result"></span>
+              </div>
+
+          </form>
+          
+        </div>
+        <script>
+// Get all forms with class 'signup' or 'login'
+const forms = document.querySelectorAll('form.signup, form.login');
+
+// Iterate over each form and attach event listener
+forms.forEach(form => {
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const output = this.querySelector('h3'); // Get the h3 element within this form
+    output.style.display = 'block'; // Show the h3 element
+  });
+});
+</script>
+        
+
+    <script>
+      document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.text();
+        
+        // Determine if it's encryption or decryption form
+        const isEncryption = form.classList.contains('login');
+
+        // Target the specific span for results
+        const resultSpan = form.querySelector(isEncryption ? '.encrypt-result' : '.decrypt-result');
+
+        // Update the result in the respective span
+        resultSpan.innerHTML = result;
+    });
+});
+
+    </script>
+      </div>
+    
+    </div>
+    
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+<footer>
+    <h4>Made by Amar Kumar for gole</h4>
+</footer>
+</html>
