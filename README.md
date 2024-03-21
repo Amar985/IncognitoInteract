@@ -1,7 +1,7 @@
 # IncognitoInteract
 
 IncognitoInteract is a Flask-based web application that utilizes the Advanced Encryption Standard (AES) algorithm developed by the National Institute of Standards and Technology (NIST) for secure text encryption and decryption.
-[Demo Link]([https://website-name.com](https://incognitointeract.onrender.com/))
+[Demo Link](https://website-name.com](https://incognitointeract.onrender.com/)
 
 ## How it Works
 
